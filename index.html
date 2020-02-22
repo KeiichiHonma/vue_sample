@@ -8,7 +8,7 @@
 <body>
 
 <!-- ここからフォームの部分 -->
-<form action="/post" method="post" enctype="multipart/form-data">
+<form action="http://localhost:8080/upload" method="post" enctype="multipart/form-data">
     <div id="upload" class="form-group commonStyle" v-bind:class="{'styleA':styleA, 'styleB':styleB}" @dragover.prevent="changeStyle($event,'ok')" @dragleave.prevent="changeStyle($event,'no')" @drop.prevent="uploadFile($event)">
 
         <label for="upload_image" class="button" style="display:none;">
