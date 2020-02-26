@@ -26,7 +26,7 @@
                     }
                 };
                 axios
-                    .post('http://localhost:8080/upload', formData, config)
+                    .post('http://localhost:8080/file', formData, config)
                     .then(function(response) {
                         // response 処理
                         console.log(response)
