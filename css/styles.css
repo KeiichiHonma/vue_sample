@@ -7,3 +7,24 @@ body {
   .styleB{border:3px dotted rgba(0,200,0,0.7);}
   .button{border:1px solid green; padding:3px; border-radius:5px; background-color:white;}
   .button p {color:green; margin-top:10px; margin-left:10px; margin-right: 10px;}
+
+.main{
+    border-collapse:  collapse; /* セルの線を重ねる */
+    width:  100%;               /* 幅指定 */
+}
+
+.main th,td {
+    border: solid 1px;          /* 枠線指定 */
+    padding: 10px;
+}
+ 
+
+ 
+.main th {
+    width:  100px;              /* 幅指定 */
+    font-weight:  normal;       /* 文字の太さ指定 */
+}
+
+.main td {
+    font-weight:  bold;         /* 文字の太さ指定 */
+}

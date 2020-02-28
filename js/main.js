@@ -3,15 +3,42 @@
     new Vue({
         el:'.form',
         data:{
-            //ファイル
-            uploadFile: null
+            preview:'',
+            name:'',
+            styleA:true,
+            styleB:false,
+            uploadFile: null,
+            info: null
+        },
+        mounted () {
+            this.getFiles()
         },
         methods:{
-            selectedFile: function(e) {
+            getFiles() {
+                axios
+                    .get('http://localhost:8080/files')
+                    .then(response => (this.info = response.data.files))
+            },
+            selectedFile: function(event) {
+                this.styleA = true;
+                this.styleB = false;
+                
                 // 選択された File の情報を保存しておく
-                e.preventDefault();
-                let files = e.target.files;
+                event.preventDefault();
+                //let files = e.target.files;
+                const files = event.target.files ? event.target.files : event.dataTransfer.files;
                 this.uploadFile = files[0];
+
+                //const file = files[0];
+                const reader = new FileReader();
+                reader.onload = event => {
+                    this.preview = event.target.result;
+                };
+                reader.readAsDataURL(this.uploadFile);
+                this.name = files[0].name;
+                //document.getElementById("upload_image").files = files;
+
+
             },
             //ファイル送信処理
             upload:function(){
@@ -26,15 +53,27 @@
                     }
                 };
                 axios
-                    .post('http://localhost:8080/upload', formData, config)
+                    .post('http://localhost:8080/file', formData, config)
                     .then(function(response) {
                         // response 処理
+                        console.log("success")
                         console.log(response)
+                        this.getFiles()
                     })
                     .catch(function(error) {
                         // error 処理
+                        console.log("error")
                         console.log(error)
                     })
+            },
+            changeStyle: function(event,flag){
+                if(flag=='ok'){
+                    this.styleA = false;
+                    this.styleB = true;
+                }else{
+                    this.styleA = true;
+                    this.styleB = false;
+                }
             },
         },
     });

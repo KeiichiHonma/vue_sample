@@ -3,16 +3,53 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="css/styles.css">
+    <style type="text/css">
+        .commonStyle{ padding:30px; text-align:center; margin:30px; width:400px;}
+        .styleA{border:3px dotted gray;}
+        .styleB{border:3px dotted rgba(0,200,0,0.7);}
+        .button{border:1px solid green; padding:3px; border-radius:5px; background-color:white;}
+        .button p {color:green; margin-top:10px; margin-left:10px; margin-right: 10px;}
+        </style>
 </head>
 
 <body>
-
-    <form class="form">
-        <h2>ファイルアップロード</h2>
-        <input @change="selectedFile" type="file" name="file">
-        <button type="button" @click="upload">投稿する</button>
-    </form>
-
+<div class="form">
+    <h1>Versioning Me</h1>
+    <table class="main">
+        <tr>
+            <td valign="top">
+                <h2>チャンネル一覧</h2>
+            </td>
+            <td valign="top">
+                <h2>ファイル一覧</h2>
+                <div
+                v-for="files in info"
+                class="files"
+                >
+                {{ files.VersionName }}<br>
+                <img :src="files.Url"/ style="max-width: 200px;">
+                </div>
+                <form>
+                    <h2>ファイルアップロード</h2>
+            
+                    <div id="upload" class="form-group commonStyle" v-bind:class="{'styleA':styleA, 'styleB':styleB}" @dragover.prevent="changeStyle($event,'ok')" @dragleave.prevent="changeStyle($event,'no')" @drop.prevent="selectedFile($event)"></div>
+                    <input @change="selectedFile($event)" type="file" name="file" style="display:none;">
+            
+                    <!-- ここからプレビュー機能の部分 -->
+                    <p>またはここに画像ファイルをドラッグ＆ドロップ</p>
+                    <img v-show="preview" v-bind:src="preview" style="width:300px;">
+                    <p v-show="preview"> {{name}} </p>
+                    <!-- ここまでプレビュー機能の部分 -->
+                    </div>
+                    <button type="button" @click="upload">投稿する</button>
+                </form>
+            </td>
+            <td valign="top">
+                <h2>バージョン一覧</h2>
+            </td>
+        </tr>
+    </table>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="js/main.js"></script>
